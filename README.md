@@ -7,7 +7,7 @@ Data and associated code for reading, filtering, and plotting data from meteorol
 #controlled by an Arduino Uno logger.
 #The towers also monitor vegetation phenology with a phenocam, but these data are not included here
 
-#There are two towers, one in a hardwood site, "the hardwood neighborhood", and one in a softwood site, in a "softwood neighborhood"
+#There are two towers, one in a hardwood site, "the hardwood neighborhood", which is surrounded by a mixed deciduous and coniferous forest, and one in a softwood site, in a "softwood neighborhood"
 
 #Data are collected by Ed Lindsey and the Collaborative Research class, with the NSF MSB Vernal Windows project 
 #and the NSF INSPIRES projects playing a supporting role
