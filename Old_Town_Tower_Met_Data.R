@@ -5,14 +5,14 @@
 #The towers also monitor vegetation phenology with a phenocam, but these data are not included here
 
 #There are two towers, one in a hardwood site, "the hardwood neighborhood", situated within a mixed
-#deciduous and coniferous forest and one in a softwood site, in a "softwood neighborhood"
+#deciduous and coniferous forest and one in a softwood site in a "softwood neighborhood"
 #Data are collected by Ed Lindsey and the Collaborative Research class, with the NSF MSB Vernal Windows project 
 #and the NSF INSPIRES projects playing a supporting role
 
 #Code written by Alix Contosta (alix.contosta@unh.edu)
 
 #####################################
-#Initiatl Set Up
+#Initial Set Up
 #####################################
 
 #call libraries
@@ -29,14 +29,14 @@ library(zoo)
 ########################################
 
 #set working directory
-setwd("C:\\Users\\alixc\\OneDrive - USNH\\UNH\\Projects\\Vernal Windows\\Tower_Data")
+setwd("C:\\Your Working Directory")
 
 #read manual OT snow depth data
 msno = read.table("manual_snow.csv", head = T, sep = ",")
 
 #read tables. The SOIL_MET.dat files are dynamic and continuously updated
-hw = read.table("New_Tower_Data\\\\OTHSHW_SOIL_MET.dat", head = F, sep = ",", skip = 4, na.strings = c("NaN", "NAN"))
-sw = read.table("New_Tower_Data\\\\OTHSSW_SOIL_MET.dat", head = F, sep = ",", skip = 4, na.strings = c("NaN", "NAN"))
+hw = read.table("OTHSHW_SOIL_MET.dat", head = F, sep = ",", skip = 4, na.strings = c("NaN", "NAN"))
+sw = read.table("OTHSSW_SOIL_MET.dat", head = F, sep = ",", skip = 4, na.strings = c("NaN", "NAN"))
 
 #the backup files are static and contain data from before open-source, Arduino sensors were added
 hw_old = read.table("OTHSHW_SOIL_MET.dat.backup", head = F, sep = ",", skip = 4, na.strings = c("NaN", "NAN"))
@@ -56,11 +56,11 @@ sw_old.1 = cbind(sw_old, sw_ghost)
 
 #add names to dataframes
 #first read lines with column names, and split and format strings 
-h = readLines("New_Tower_Data\\\\OTHSHW_SOIL_MET.dat")[2]
+h = readLines("OTHSHW_SOIL_MET.dat")[2]
 h2 = as.factor(unlist(strsplit(h, ",")) )
 h3 = gsub('"', "", h2)
 
-s = readLines("New_Tower_Data\\\\OTHSSW_SOIL_MET.dat")[2]
+s = readLines("OTHSSW_SOIL_MET.dat")[2]
 s2 = as.factor(unlist(strsplit(s, ",")) )
 s3 = gsub('"', "", s2)
 
@@ -222,8 +222,7 @@ ot$SD = ifelse(ot$DATETIME < as.POSIXct("2019-11-15 00:00:00") &
                                     (1.88 - ot$TCDT_corr) * 100))))
 
 #make values that were below zero or outside of period of snowpack
-#occurrence (determined by Ed Lindsey and OTHS students
-#see link: https://docs.google.com/spreadsheets/d/1A-dZsYg5leZ4hKduwx23xjWYmg7BKPQFQ0pEczrk3Rs/edit#gid=1196535705)
+#occurrence (determined by Ed Lindsey and OTHS students)
 ot$SnowDepth = ifelse(ot$DATETIME > as.POSIXct("2019-04-16 00:00:00") & ot$DATETIME < as.POSIXct("2019-11-13 00:00:00")
                       & ot$Site == "HW", 0,
                       ifelse(ot$DATETIME > as.POSIXct("2020-04-15 00:00:00") & ot$DATETIME < as.POSIXct("2020-12-07 00:00:00")
@@ -256,8 +255,7 @@ ot$ARD_SD = ifelse(ot$Site == "HW", (1920 - ot$ARD_DT_corr) /10,
                    (1937 - ot$ARD_DT_corr) /10)
 
 #make values that were below zero or outside of period of snowpack
-#occurrence (determined by Ed Lindsey and OTHS students
-#see link: https://docs.google.com/spreadsheets/d/1A-dZsYg5leZ4hKduwx23xjWYmg7BKPQFQ0pEczrk3Rs/edit#gid=1196535705)
+#occurrence (determined by Ed Lindsey and OTHS students)
 ot$ARD_SnowDepth = ifelse(ot$DATETIME > as.POSIXct("2021-03-22 00:00:00") & 
                             ot$DATETIME < as.POSIXct("2021-11-28 00:00:00"), 0, 
                           ifelse(ot$DATETIME > as.POSIXct("2022-03-30 00:00:00") & ot$DATETIME < as.POSIXct("2022-12-20 00:00:00") 
